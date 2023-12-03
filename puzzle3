@@ -1,0 +1,28 @@
+str_map_input = '''467..114..
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598..'''
+
+def make_matrix(str_map):
+    res = []
+    for line in str_map.split('\n'):
+        aux_res = []
+        for el in line:
+            aux_res.append(el)
+        res.append(aux_res)
+        
+    return res
+    
+map_input = make_matrix(str_map_input)
+
+print(map_input)
+print(len(map_input))
+
+for x in map_input:
+    print(len(x))
