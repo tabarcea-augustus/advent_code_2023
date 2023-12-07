@@ -1,5 +1,4 @@
 
-
 with open('input.txt', 'r') as fd:
     input_str = fd.read()
 
