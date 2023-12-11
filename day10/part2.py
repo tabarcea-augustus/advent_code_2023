@@ -156,6 +156,7 @@ height = len(pipe_map[0])
 for x in range(len(pipe_map)):
     for y in range(len(pipe_map[0])):
         if pipe_map[x][y] == 'S':
+            start_s_x, start_s_y = x, y
             maximilian, maximilian_coords = flood(pipe_map, width, height, visit_map, x, y, 1)
             print(maximilian, maximilian_coords)
 
@@ -313,29 +314,69 @@ print_matrix(visit_map_copy)
 #                     visit_map_copy[idx1][idx2] = -111
 
 
+# included_points = 0
+# for idx1 in range(len(visit_map_copy)):
+#     for idx2 in range(len(visit_map_copy[0])):
+#         if visit_map_copy[idx1][idx2] == -2:
+#             continue
+#         crosses = 0
+#         x2, y2 = idx2, idx1
+#
+#         while x2 < height and y2 < width:
+#             # print(y2, x2, width, height)
+#             c2 = pipe_map[y2][x2]
+#             if visit_map_copy[y2][x2] == -2 and c2 != "L" and c2 != "7":
+#                 crosses += 1
+#             x2 += 1
+#             y2 += 1
+#
+#         if crosses % 2 == 1:
+#             included_points += 1
+#             visit_map_copy[idx1][idx2] = '-111111'
+
+
+
+s_type = []
+if visit_map_copy[start_s_x+1][start_s_y] == -2 and visit_map[start_s_x+1][start_s_y] == 2:
+    s_type.append('down')
+if visit_map_copy[start_s_x-1][start_s_y] == -2 and visit_map[start_s_x-1][start_s_y] == 2:
+    s_type.append('up')
+if visit_map_copy[start_s_x][start_s_y+1] == -2 and visit_map[start_s_x][start_s_y+1] == 2:
+    s_type.append('r')
+if visit_map_copy[start_s_x][start_s_y-1] == -2 and visit_map[start_s_x][start_s_y-1] == 2:
+    s_type.append('l')
+print(s_type)
+
+if 'down' in s_type and 'r' in s_type:
+    s_type = 'F'
+elif 'down' in s_type and 'l' in s_type:
+    s_type = '7'
+elif 'down' in s_type and 'up' in s_type:
+    s_type = '|'
+elif 'up' in s_type and 'l' in s_type:
+    s_type = 'J'
+elif 'up' in s_type and 'r' in s_type:
+    s_type = 'L'
+elif 'l' in s_type and 'r' in s_type:
+    s_type = '-'
+
+pipe_map[start_s_x][start_s_y] = s_type
+
 included_points = 0
 for idx1 in range(len(visit_map_copy)):
+    inside = False
     for idx2 in range(len(visit_map_copy[0])):
         if visit_map_copy[idx1][idx2] == -2:
-            continue
-        crosses = 0
-        x2, y2 = idx2, idx1
-
-        while x2 < height and y2 < width:
-            # print(y2, x2, width, height)
-            c2 = pipe_map[y2][x2]
-            if visit_map_copy[y2][x2] == -2 and c2 != "L" and c2 != "7":
-                crosses += 1
-            x2 += 1
-            y2 += 1
-
-        if crosses % 2 == 1:
-            included_points += 1
-            visit_map_copy[idx1][idx2] = '-111111'
-
+            c = pipe_map[idx1][idx2]
+            if c in ['|', 'L', 'J']:
+                inside = not inside
+        else:
+            if inside:
+                included_points += 1
+                visit_map_copy[idx1][idx2] = -111
 
 print_matrix(visit_map_copy)
-# print_matrix(pipe_map)
+# # print_matrix(pipe_map)
 print(included_points)
 
 # 493
