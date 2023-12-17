@@ -30,7 +30,7 @@ for x in range(len(galaxy_columns)):
     if all(y == '.' for y in galaxy_columns[x]):
         new_columns.append(x)
 
-print(new_lines, new_columns, points_coord)
+# print(new_lines, new_columns, points_coord)
 
 debug_example_map = {
     (0,3): 1,
@@ -46,7 +46,7 @@ debug_example_map = {
 
 expanded_galaxy = []
 
-print_matrix(galaxy)
+# print_matrix(galaxy)
 
 total_distance = 0
 galaxy_pairs = 0
