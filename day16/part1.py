@@ -20,13 +20,16 @@ def flood_fill(screen, visit_grid, current_row, current_column, row_len, col_len
     curent_color = color+1
     ok = False
     directions = visit_grid[current_row][current_column][1]
+    if len(directions) == 4:
+        return
     # print(screen[current_row][current_column], direction, directions)
-    # print_matrix(visit_grid)
+    print_matrix(visit_grid)
     if direction not in directions:
         ok = True
 
     if visit_grid[current_row][current_column] == 0:
         visit_grid[current_row][current_column][0] = curent_color
+        visit_grid[current_row][current_column][1].add(direction)
     else:
         visit_grid[current_row][current_column][0] = curent_color
         visit_grid[current_row][current_column][1].add(direction)
