@@ -18,7 +18,7 @@ def print_matrix2(matrix, ):
 
 
 file_name = 'test_input.txt'
-# file_name = 'input.txt'
+file_name = 'input.txt'
 
 with open(file_name, 'r') as fd:
     content = fd.readlines()
@@ -71,7 +71,7 @@ def flood_fill(screen, row_len, col_len):
                 next_steps = 1
 
             if 0 <= next_row < row_len and 0 <= next_column < col_len:
-                if next_steps <= 3:
+                if next_steps <= 10 and (next_direction == direction or steps >= 4 or steps == -1):
                     new_cost = int(screen[next_row][next_column])
                     if (next_row, next_column, next_direction, next_steps) in d:
                         continue
@@ -85,8 +85,9 @@ def flood_fill(screen, row_len, col_len):
     for (row, col, direction, steps), cost in d.items():
 
         if row == row_len - 1 and col == col_len - 1:
-            print(cost)
-            res = min(res, cost)
+            if steps >= 4:
+                print(cost)
+                res = min(res, cost)
 
     return res
 
